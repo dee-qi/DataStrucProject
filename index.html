@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="style.css" type="text/css" rel="stylesheet">
+    <title>7工头扒皮工厂任务调度系统</title>
+</head>
+<body>
+    <h1 align="center">7工头扒皮工厂任务调度系统</h1>
+    <div class="list-left">
+        <p align="center">请在此设置任务台数和他们的释放时间、截止时间</p>
+        <span class="left-item">
+            <p class="meachin-name">任务1</p>
+            <p>Release Time:</p>
+            <input class="input-rt" onchange="toDoOnChange(this)">
+            <p>Deadline:</p>
+            <input class="input-ddl" onchange="toDoOnChange(this)">
+        </span>
+        <span class="left-item">
+            <p class="meachin-name">任务2</p>
+            <p>Release Time:</p>
+            <input class="input-rt" onchange="toDoOnChange(this)">
+            <p>Deadline:</p>
+            <input class="input-ddl" onchange="toDoOnChange(this)">
+        </span>
+        <button class="add">增加一个任务</button>
+    </div>
+    <div class="list-right">
+        <div class="divider">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="ruler">
+            <p>1</p>
+            <p>2</p>
+            <p>3</p>
+            <p>4</p>
+            <p>5</p>
+            <p>6</p>
+        </div>
+        <div class="right-item">
+            <div class="time-line">
+                <div class="used-time"></div>
+            </div>
+        </div>
+        <div class="right-item">
+            <div class="time-line">
+                <div class="used-time"></div>
+            </div>
+        </div>
+        <div id="right-space">
+            <p align="center">注意：可用的调度时间包含ReleaseTime但不包含Deadline</p>
+        </div>
+    </div>
+    <div>
+        <button class="show-result">SHOW RESULT</button>
+    </div>
+    <div class="result">
+        <div class="ruler">
+            <p>1</p>
+            <p>2</p>
+            <p>3</p>
+            <p>4</p>
+            <p>5</p>
+            <p>6</p>
+        </div>
+        <div class="result-item">
+            <div class="time-line">
+                <div class="arrangement">
+                    <p>1</p>
+                    <p>3</p>
+                    <p>4</p>
+                    <p>2</p>
+                    <p>6</p>
+                    <p>5</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js.js"></script>
+</body>
+</html>

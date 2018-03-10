@@ -1,0 +1,176 @@
+input {
+    width: 30px;
+    height: 20px;
+    border: none;
+    border-radius: 5px;
+    /* display: inline-block; */
+}
+
+p {
+    text-align: center;
+}
+
+.list-left {
+    float: left;
+    width: 400px;
+    /* height: 400px; */
+    background: #7e7e7e;
+    display: flex;
+    flex-direction: column;
+}
+
+.list-left .add {
+    color: white;
+    /* text-align: center; */
+    width: 380px;
+    height: 36px;
+    /* line-height: 50px; */
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    margin: 10px;
+    background: red;
+}
+
+.add:hover {
+    background: deeppink;
+}
+
+.left-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    border: red 3px;
+    height: 44px;
+}
+
+/*右边的部分*/
+.list-right {
+    margin-left: 410px;
+    /* height: 440px; */
+    background: orange;
+    position: relative;
+}
+
+.divider {
+    z-index: 999;
+    width: 100%;
+    height: 138px;
+    position: absolute;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+.divider span {
+    width: 1px;
+    background: gray;
+}
+
+.divider span:first-child {
+    width: 0;
+    background: transparent;
+}
+
+.divider span:last-child {
+    width: 0;
+    background: transparent;
+}
+
+.ruler {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0 10px;
+}
+
+.ruler p {
+    font-size: 12px;
+    width: 14px;
+    color: red;
+    font-weight: bold;
+}
+
+.right-item {
+    height: 44px;
+    border: 2px green;
+    background: pink;
+    display: flex;
+    align-items: center;
+}
+
+#right-space {
+    height: 56px;
+    background: rgb(207, 207, 223);
+}
+
+.time-line {
+    background: bisque;
+    border-radius: 5px;
+    height: 12px;
+    margin-left: 10px;
+    margin-right: 10px;
+    flex-grow: 1;
+}
+
+.used-time {
+    background: red;
+    border-radius: 5px;
+    height: 12px;
+    width: 0px;
+}
+
+#right-space p {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+}
+
+/*底下显示结果的部分*/
+.show-result {
+    height: 44px;
+    width: 100%;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background: yellowgreen;
+    outline: none;
+}
+
+.show-result:hover {
+    background: yellow;
+}
+
+.result {
+    margin-top: 10px;
+    height: 400px;
+    background: #7e7e7e;
+}
+
+.result-item {
+    height: 44px;
+    border: 2px green;
+    background: yellow;
+    display: flex;
+    align-items: center;
+}
+
+.arrangement {
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.arrangement p {
+    /* display: inline; */
+    color: white;
+    text-align: center;
+    font-size: 10px;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: red;
+}
