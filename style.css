@@ -1,3 +1,7 @@
+body {
+    background: green;
+}
+
 input {
     width: 30px;
     height: 20px;
@@ -8,6 +12,10 @@ input {
 
 p {
     text-align: center;
+}
+
+.hidden {
+    visibility: hidden;
 }
 
 .list-left {
@@ -147,7 +155,7 @@ p {
 .result {
     margin-top: 10px;
     height: 400px;
-    background: #7e7e7e;
+    background: blue;
 }
 
 .result-item {

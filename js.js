@@ -5,7 +5,7 @@ function $(s) {
 
 var amountOfTask = 2;
 var addTask = $(".add");
-var showResult = $('.show-result');
+var showResultBt = $('.show-result');
 var leftList = $('.list-left');
 var rightList = $('.list-right');
 
@@ -29,13 +29,24 @@ function newLeftItem() {
 }
 
 function newRightItem() {
-    //TODO:修改template的内容
     const template = `
     <div class="right-item">
         <div class="time-line">
             <div class="used-time"></div>
         </div>
     </div>
+    `
+    return getElementViaTemplate(template);
+}
+
+function newResultItem() {
+    const template = `
+    <div class="result-item">
+            <div class="time-line">
+                <div class="arrangement">
+                </div>
+            </div>
+        </div>
     `
     return getElementViaTemplate(template);
 }
@@ -126,23 +137,91 @@ function toDoOnChange(e){
     }
 }
 
+function getResult() {
+    //TODO:修改获取结果的算法，当前仅为测试数据
+    //此方法返回一个二维数组，第一维代表有几个结果，第二维是maxDeadline
+    var result = new Array(4);
+    for(var i=0; i<result.length; i++){
+        result[i] = new Array(10);
+    }
+    result[0][3] = 1;
+    result[0][9] = 2;
+    result[1][2] = 1;
+    result[1][5] = 2;
+    result[2][4] = 1;
+    result[2][7] = 2;
+    result[3][1] = 1;
+    result[3][5] = 2;
+    return result;
+}
+
+function showResult() {
+    var resultContainer = $('.result');
+    resultContainer.className = resultContainer.className.replace(' hidden', '');
+    var result = getResult();
+    console.log('show result')
+    var ruler = $('.result .ruler');
+    var divider = $('.result .divider');
+    var max = result[0].length;
+    var amountOfResult = result.length;
+    // var max = 36;
+    ruler.innerHTML = '';
+    divider.innerHTML = '';
+    for(var i=1; i<=max; i++) {
+        var p = document.createElement('p');
+        p.innerHTML = i;
+        ruler.appendChild(p);
+        var xiaosaisai = document.createElement('span');
+        divider.appendChild(xiaosaisai);
+    }
+    var xiaosaisai = document.createElement('span');
+    divider.appendChild(xiaosaisai);
+    divider.style.width = ruler.offsetWidth + 'px';
+    divider.style.margin = '0 10px';
+    divider.style.height = (50 + 44*result.length) + 'px';
 
 
+    var oldResult = resultContainer.getElementsByClassName('result-item');
+    console.log(oldResult.length);
+    var len = oldResult.length;
+    for(var x=0; x<len; x++) {
+        resultContainer.removeChild(oldResult[0]);
+        console.log('remove', x);
+        console.log('len', oldResult.length);
+    }
+    for(var i=0; i<amountOfResult; i++) {
+        var resultItem = newResultItem();
+        var arrangement = resultItem.getElementsByClassName('arrangement')[0];
+        console.log(arrangement);
+        for(var k=0; k<max; k++) {
+            var p = document.createElement('p');
+            arrangement.appendChild(p);
+            if(result[i][k] == undefined) {
+                p.style.visibility = 'hidden';
+                
+            } else {
+                p.style.visibility = 'visiable';
+                p.innerHTML = result[i][k];
+            }
+        }
+        resultContainer.appendChild(resultItem);
+    }
+}
+
+//-----------------------
+//为各个地方添加监听事件
+//-----------------------
 addTask.addEventListener("click",()=>{
-    //add a Task
     amountOfTask ++;
-    //添加一个left-item
     leftList.insertBefore(newLeftItem(), addTask);
-    //添加一个right-item
     var space = $('#right-space');
     rightList.insertBefore(newRightItem(), space);
     var divider = $('.divider');
     divider.style.height = (divider.offsetHeight + 44) + 'px';
 })
 
-showResult.addEventListener('click', ()=>{
+showResultBt.onclick = showResult;
 
-})
 //TODO:这是个测试方法，删除这一部分
 $('#right-space').addEventListener('click', ()=>{
     alert(getReleaseTime(1)+", "+getDeadline(1));
