@@ -92,7 +92,6 @@ function drawTimeLine(e) {
     var release = getReleaseTime(nthTask);
     var ddl = getDeadline(nthTask);
     if(release != '' && ddl != '') {
-        console.log('drawTimeLine', nthTask);
         var timeLine = rightList.getElementsByClassName('time-line')[nthTask-1];
         var usedLine = timeLine.children[0];
         usedLine.style.width = timeLine.offsetWidth/maxDeadline * (ddl -release) + 'px';
@@ -137,6 +136,20 @@ function toDoOnChange(e){
     }
 }
 
+function getInput() {
+    //将输入数据转化为一个二位数组
+    //第一维代表第(i+1)个任务
+    //第二维代表ReleaseTime和Deadline
+    var input = [];
+    var leftItemList = document.getElementsByClassName('left-item');
+    for(var i=0; i<leftItemList.length; i++) {
+        input[i] = new Array(2);
+        input[i][0] = leftItemList[i].getElementsByClassName('input-rt')[0].value;
+        input[i][1] = leftItemList[i].getElementsByClassName('input-ddl')[0].value;
+    }
+    return input;
+}
+
 function getResult() {
     //TODO:修改获取结果的算法，当前仅为测试数据
     //此方法返回一个二维数组，第一维代表有几个结果，第二维是maxDeadline
@@ -159,12 +172,12 @@ function showResult() {
     var resultContainer = $('.result');
     resultContainer.className = resultContainer.className.replace(' hidden', '');
     var result = getResult();
-    console.log('show result')
     var ruler = $('.result .ruler');
     var divider = $('.result .divider');
     var max = result[0].length;
     var amountOfResult = result.length;
     // var max = 36;
+    //调整ruler和divider
     ruler.innerHTML = '';
     divider.innerHTML = '';
     for(var i=1; i<=max; i++) {
@@ -180,19 +193,16 @@ function showResult() {
     divider.style.margin = '0 10px';
     divider.style.height = (50 + 44*result.length) + 'px';
 
-
+    //移除原来的result-item
     var oldResult = resultContainer.getElementsByClassName('result-item');
-    console.log(oldResult.length);
     var len = oldResult.length;
     for(var x=0; x<len; x++) {
         resultContainer.removeChild(oldResult[0]);
-        console.log('remove', x);
-        console.log('len', oldResult.length);
     }
+    //添加新的result-item
     for(var i=0; i<amountOfResult; i++) {
         var resultItem = newResultItem();
         var arrangement = resultItem.getElementsByClassName('arrangement')[0];
-        console.log(arrangement);
         for(var k=0; k<max; k++) {
             var p = document.createElement('p');
             arrangement.appendChild(p);
@@ -224,7 +234,7 @@ showResultBt.onclick = showResult;
 
 //TODO:这是个测试方法，删除这一部分
 $('#right-space').addEventListener('click', ()=>{
-    alert(getReleaseTime(1)+", "+getDeadline(1));
+    getInput();
 })
 
 window.onresize = function() {
