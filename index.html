@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="style.css" type="text/css" rel="stylesheet">
-    <title>7工头扒皮工厂任务调度系统</title>
+    <title>工厂任务调度系统</title>
 </head>
 <body>
-    <h1 align="center">7工头扒皮工厂任务调度系统</h1>
+    <div class="welcome">
+        <img class="welcome-img"src="img/fact.jpeg" style="width:100%;height:100%;">
+    </div>
+    <h1 align="center">工厂任务调度系统</h1>
     <div class="list-left">
-        <p align="center">请在此设置任务台数和他们的释放时间、截止时间</p>
+        <p class="left-title" align="center">请在此设置任务台数和他们的释放时间、截止时间</p>
         <span class="left-item">
             <p class="meachin-name">任务1</p>
             <p>Release Time:</p>
@@ -50,7 +53,7 @@
                 <div class="used-time"></div>
             </div>
         </div>
-        <div class="right-item">
+        <div class="right-item light-blue">
             <div class="time-line">
                 <div class="used-time"></div>
             </div>
@@ -59,8 +62,9 @@
             <p align="center">注意：可用的调度时间包含ReleaseTime但不包含Deadline</p>
         </div>
     </div>
-    <div>
-        <button class="show-result">SHOW RESULT</button>
+    <div class='bt-container'>
+        <button class="bt-mid show-result">查看所有</button>
+        <button class="bt-mid show-early">尽早结束</button>
     </div>
     <div class="result hidden">
         <div class="divider">

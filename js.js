@@ -6,6 +6,7 @@ function $(s) {
 var amountOfTask = 2;
 var addTask = $(".add");
 var showResultBt = $('.show-result');
+var showEarlyBt = $('.show-early');
 var leftList = $('.list-left');
 var rightList = $('.list-right');
 
@@ -30,7 +31,7 @@ function newLeftItem() {
 
 function newRightItem() {
     const template = `
-    <div class="right-item">
+    <div class="right-item ${amountOfTask%2==0 ? 'light-blue' : ''}">
         <div class="time-line">
             <div class="used-time"></div>
         </div>
@@ -136,47 +137,108 @@ function toDoOnChange(e){
     }
 }
 
-function getInput() {
-    //将输入数据转化为一个二位数组
-    //第一维代表第(i+1)个任务
-    //第二维代表ReleaseTime和Deadline
+function Task(id, rt, ddl) {
+    this.id = id;
+    this.rt = rt;
+    this.ddl = ddl;
+
+    this.isBiggerThan = function(task) {
+        if(this.rt > task.rt) return true;
+        if(this.rt == task.rt && this.ddl > task.ddl) return true;
+        return false;
+    }
+}
+
+function sortTasks(list) {
+    for(var i=0; i<list.length; i++) {
+        for(var j=i+1; j<list.length; j++) {
+            if(list[i].isBiggerThan(list[j])) {
+                var temp = list[i];
+                list[i] = list[j];
+                list[j] = temp; 
+            }
+        }
+    }
+    return list;
+}
+
+function getSortedInput() {
     var input = [];
     var leftItemList = document.getElementsByClassName('left-item');
     for(var i=0; i<leftItemList.length; i++) {
-        input[i] = new Array(2);
-        input[i][0] = leftItemList[i].getElementsByClassName('input-rt')[0].value;
-        input[i][1] = leftItemList[i].getElementsByClassName('input-ddl')[0].value;
+        var rts = leftItemList[i].getElementsByClassName('input-rt')[0].value;
+        var ddls = leftItemList[i].getElementsByClassName('input-ddl')[0].value;
+        input[i] = new Task(i+1, parseInt(rts), parseInt(ddls));
+        sortTasks(input);
     }
     return input;
 }
 
-function getResult() {
-    //TODO:修改获取结果的算法，当前仅为测试数据
-    //此方法返回一个二维数组，第一维代表有几个结果，第二维是maxDeadline
-    var result = new Array(4);
-    for(var i=0; i<result.length; i++){
-        result[i] = new Array(10);
+function copyArray(a) {
+    var b = new Array(a.length);
+    for(var i=0; i<a.length; i++) {
+        b[i] = a[i];
     }
-    result[0][3] = 1;
-    result[0][9] = 2;
-    result[1][2] = 1;
-    result[1][5] = 2;
-    result[2][4] = 1;
-    result[2][7] = 2;
-    result[3][1] = 1;
-    result[3][5] = 2;
-    return result;
+    return b;
 }
 
-function showResult() {
+function processNext(index, occupied, tempResult, input, result) {
+    for(var i=input[index].rt; i<input[index].ddl; i++) {
+        if(occupied.indexOf(i) == -1) {
+            tempResult[i] = input[index].id;
+            occupied.push(i);
+            if(index == input.length-1) {
+                result.push(copyArray(tempResult));
+            } else {
+                processNext(index+1,  occupied, tempResult, input, result);                              
+            }
+            tempResult[i] = undefined;
+            occupied.pop();
+        } else {
+            continue;
+            
+        }
+    }
+}
+
+function getAllResult() {
+    //TODO:修改获取结果的算法，当前仅为测试数据
+    //此方法返回一个二维数组，第一维代表有几个结果，第二维大小是是maxDeadline
+    //result[i][j] = k 表示第i个调度方案的j时间安排编号为k的任务
+    var input = getSortedInput();
+    var result = [];
+    var occupied = [];
+    for(var i=input[0].rt; i<input[0].ddl; i++) {
+        var index = 0;
+        var tempResult = [];
+        tempResult[i] = input[0].id;
+        occupied.push(i);
+        processNext(index+1, occupied, tempResult, input, result);
+        tempResult[i] = undefined;
+        occupied.pop();
+    }
+    return adjustResult(result);
+}
+
+//好无奈啊。。。
+function adjustResult(result) {
+    var a = new Array(result.length);
+    for(var i=0; i<result.length; i++) {
+        a[i] = new Array(parseInt(maxDeadline)-1);
+        for(var j=1; j<result[i].length; j++){
+            a[i][j-1] = result[i][j];
+        }
+    }
+    return a;
+}
+
+function showResult(result) {
     var resultContainer = $('.result');
     resultContainer.className = resultContainer.className.replace(' hidden', '');
-    var result = getResult();
     var ruler = $('.result .ruler');
     var divider = $('.result .divider');
     var max = result[0].length;
     var amountOfResult = result.length;
-    // var max = 36;
     //调整ruler和divider
     ruler.innerHTML = '';
     divider.innerHTML = '';
@@ -214,8 +276,35 @@ function showResult() {
                 p.innerHTML = result[i][k];
             }
         }
+        if(i%2==1) resultItem.className = resultItem.className + ' light-blue';
         resultContainer.appendChild(resultItem);
     }
+}
+
+function getLastNoEmptyIndex(array) {
+    for(var i=array.length-1; i>=0; i--) {
+        if(array[i] !== undefined) return i;
+    }
+    return -1;
+}
+
+function getEarlyResult() {
+    console.log('getEarlyResult');
+    var result = getAllResult();
+    var last = result[0].length-1;
+    for(var i=0; i<result.length; i++) {
+        var index = getLastNoEmptyIndex(result[i]);
+        if(index < last) last = index;
+    }
+    for(var i=0; i<result.length; i++) {
+        var index = getLastNoEmptyIndex(result[i]);
+        if(index > last) {
+            result.splice(i, 1);
+            i--;
+        }
+    }
+    console.log('early', result);
+    return result;
 }
 
 //-----------------------
@@ -230,16 +319,24 @@ addTask.addEventListener("click",()=>{
     divider.style.height = (divider.offsetHeight + 44) + 'px';
 })
 
-showResultBt.onclick = showResult;
-
-//TODO:这是个测试方法，删除这一部分
-$('#right-space').addEventListener('click', ()=>{
-    getInput();
-})
+showResultBt.onclick = function() {
+    showResult(getAllResult());
+};
+showEarlyBt.onclick = function() {
+    showResult(getEarlyResult());
+};
 
 window.onresize = function() {
     if(maxDeadline != 0){
         drawRuler();
         reDrawAllTimeLine();
     }
+    var ruler = $('.result .ruler');
+    var divider = $('.result .divider');
+    divider.style.width = ruler.offsetWidth + 'px';
+}
+
+$('.welcome-img').onclick = function() {
+    var img = $('.welcome-img');
+    img.parentNode.className = img.parentNode.className + ' hidden';
 }

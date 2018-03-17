@@ -1,17 +1,36 @@
+
 body {
-    background: green;
+    background: url(img/bg.jpg) no-repeat top;
+    background-color: #fafafa;
+    margin: 0px 24px;
+    font-family: Roboto,Helvetica Neue,Helvetica,Tahoma,Arial,FZLanTingHeiS-L-G,PingFang SC,Microsoft YaHei;
 }
 
 input {
-    width: 30px;
+    width: 50px;
     height: 20px;
     border: none;
     border-radius: 5px;
-    /* display: inline-block; */
+    background-color: #f5f2f0;
+    box-shadow: 1px 1px 1px #888888 inset;
 }
 
 p {
     text-align: center;
+    color: #666;
+}
+
+.welcome {
+    z-index: 335;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+}
+
+.left-title {
+    color: white;
 }
 
 .hidden {
@@ -19,29 +38,30 @@ p {
 }
 
 .list-left {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background: url(img/leftbg.png) no-repeat 0px 0px;
+    background-size: 100% 50px;
+    background-color: #fafafa;
     float: left;
     width: 400px;
-    /* height: 400px; */
-    background: #7e7e7e;
     display: flex;
     flex-direction: column;
+    border-radius: 10px;
 }
 
 .list-left .add {
     color: white;
-    /* text-align: center; */
     width: 380px;
     height: 36px;
-    /* line-height: 50px; */
     border: none;
     border-radius: 10px;
     outline: none;
     margin: 10px;
-    background: red;
+    background: #2077ff;
 }
 
 .add:hover {
-    background: deeppink;
+    background: #5f94e9;
 }
 
 .left-item {
@@ -49,20 +69,20 @@ p {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    border: red 3px;
     height: 44px;
 }
 
 /*右边的部分*/
 .list-right {
-    margin-left: 410px;
-    /* height: 440px; */
-    background: orange;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-left: 430px;
+    background: #2077ff;
+    border-radius: 10px;
     position: relative;
 }
 
 .divider {
-    z-index: 999;
+    z-index: 333;
     width: 100%;
     height: 138px;
     position: absolute;
@@ -73,7 +93,7 @@ p {
 
 .divider span {
     width: 1px;
-    background: gray;
+    background: #dadada;
 }
 
 .divider span:first-child {
@@ -87,6 +107,7 @@ p {
 }
 
 .ruler {
+    border-bottom: #dadada 1px solid;
     height: 50px;
     display: flex;
     align-items: center;
@@ -97,14 +118,13 @@ p {
 .ruler p {
     font-size: 12px;
     width: 14px;
-    color: red;
+    color:white;
     font-weight: bold;
 }
 
 .right-item {
     height: 44px;
-    border: 2px green;
-    background: pink;
+    background: #fafafa;
     display: flex;
     align-items: center;
 }
@@ -112,10 +132,12 @@ p {
 #right-space {
     height: 56px;
     background: rgb(207, 207, 223);
+    border-radius: 0px 0px 10px 10px;
+    border-top: none;
 }
 
 .time-line {
-    background: bisque;
+    background: #c1c3ca;
     border-radius: 5px;
     height: 12px;
     margin-left: 10px;
@@ -124,7 +146,7 @@ p {
 }
 
 .used-time {
-    background: red;
+    background: #ffe157;
     border-radius: 5px;
     height: 12px;
     width: 0px;
@@ -138,47 +160,69 @@ p {
 }
 
 /*底下显示结果的部分*/
-.show-result {
+.bt-container {
+    padding-top: 16px;
     height: 44px;
-    width: 100%;
-    margin-top: 10px;
-    border: none;
-    border-radius: 10px;
-    background: yellowgreen;
-    outline: none;
+    clear: both;
+    display: flex;
+    justify-content: space-around;
 }
 
-.show-result:hover {
-    background: yellow;
+.bt-mid {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 300px;
+    border: none;
+    border-radius: 10px;
+    background: #2077ff;
+    outline: none;
+    color: white;
+}
+
+.show-result {
+    display: inline;
+}
+
+.bt-mid:hover {
+    background: #5f94e9;
 }
 
 .result {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
     margin-top: 10px;
-    height: 400px;
-    background: blue;
+    background: #ebebeb;
+}
+
+.result .ruler p {
+    color: #666;
 }
 
 .result-item {
     height: 44px;
     border: 2px green;
-    background: yellow;
+    background: #fafafa;
     display: flex;
     align-items: center;
 }
 
 .arrangement {
-    height: 16px;
+    margin-top: -3px;
+    height: 18px;
     display: flex;
     align-items: center;
     justify-content: space-around;
 }
 .arrangement p {
-    /* display: inline; */
     color: white;
     text-align: center;
     font-size: 10px;
-    height: 16px;
-    width: 16px;
+    height: 18px;
+    width: 18px;
     border-radius: 50%;
-    background: red;
+    background: rgb(83, 111, 231);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.light-blue {
+    background: rgb(235, 235, 235);
 }
